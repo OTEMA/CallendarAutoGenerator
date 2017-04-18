@@ -5,6 +5,18 @@
  */
 package com.otema.autocallendargenerator;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,17 +25,25 @@ import javax.swing.JOptionPane;
  */
 public class Callendar {
     public static void main(String []args){
-        String strYear =
-             JOptionPane.showInputDialog(null,
+        String strYear = JOptionPane.showInputDialog(null,
              "Enter a Year(e.g., 2001):",
              "Input",
              JOptionPane.QUESTION_MESSAGE);
+        Document document = new Document();
+        try{
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(strYear + ".pdf"));
+        document.close();
+        writer.close();
+        }
+        catch(DocumentException | FileNotFoundException e){
+            
+        }
+        
          //Convert the string into an int value
      int Year = Integer.parseInt(strYear);
-        for(int i = 1; i < 13; i++) {
-            
-         printMonth(Year, i);
-     }
+             for(int i = 1; i < 13; i++) {
+                  printMonth(Year, i);
+               }
     }
      //------------------------------------------------------------
         static void printMonth(int year, int month) {
@@ -33,9 +53,37 @@ public class Callendar {
          
         //------------------------------------------------------------
         static void printMonthTitle(int year, int month){
-            System.out.println("          " + getMonthName(month) + " " + year);
-            System.out.println("----------------------------");
-            System.out.println(" Sun Mon Tue Wed Thu Fri Sat");
+            Document document = new Document();
+              try{
+                 
+            Font red = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.RED);
+            Font black_lg = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD, BaseColor.BLACK);
+            Font black_sm = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD, BaseColor.BLACK);
+            Chunk type = new Chunk("Designed Atomatically by java", black_sm);
+            Chunk head = new Chunk("MASENO UNIVERSITY", black_lg);
+            Chunk BgSpace = new Chunk("          " );
+            Chunk SmSpace = new Chunk( " ");
+            Chunk Underline = new Chunk("----------------------------");
+            Chunk DaysOfTheWeek = new Chunk(" Sun Mon Tue Wed Thu Fri Sat");
+            type.setBackground(new BaseColor(0, 153, 153));
+            Paragraph p = new Paragraph(type);
+            Paragraph headtext = new Paragraph(head);
+            document.open();
+             PdfPTable table = new PdfPTable(2);
+            PdfPCell cell = new PdfPCell(headtext);
+            cell.setBorderColor(BaseColor.WHITE);
+            cell.setColspan(4);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(cell);
+           document.add(BgSpace + getMonthName(month) + SmSpace + year);
+            document.add(Underline);
+            document.add(DaysOfTheWeek);
+            }
+            
+         catch (DocumentException | FileNotFoundException e){
+             
+         }
+                       
         }
          
         //------------------------------------------------------------
