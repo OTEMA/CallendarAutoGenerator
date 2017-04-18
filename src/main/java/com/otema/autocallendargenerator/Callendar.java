@@ -60,7 +60,7 @@ public class Callendar {
             Font black_lg = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD, BaseColor.BLACK);
             Font black_sm = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD, BaseColor.BLACK);
             Chunk type = new Chunk("Designed Atomatically by java", black_sm);
-            Chunk head = new Chunk("MASENO UNIVERSITY", black_lg);
+            Chunk head = new Chunk("Otema", black_lg);
             Chunk BgSpace = new Chunk("          " );
             Chunk SmSpace = new Chunk( " ");
             Chunk Underline = new Chunk("----------------------------");
