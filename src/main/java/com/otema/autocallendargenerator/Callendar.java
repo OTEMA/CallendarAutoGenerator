@@ -31,19 +31,19 @@ public class Callendar {
              JOptionPane.QUESTION_MESSAGE);
         Document document = new Document();
         try{
+            document.open();
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(strYear + ".pdf"));
         document.close();
         writer.close();
+        //Convert the string into an int value
+     int Year = Integer.parseInt(strYear);
+             for(int i = 1; i < 13; i++) {
+                  document.add(printMonth(Year, i));
+               }
         }
         catch(DocumentException | FileNotFoundException e){
             
         }
-        
-         //Convert the string into an int value
-     int Year = Integer.parseInt(strYear);
-             for(int i = 1; i < 13; i++) {
-                  printMonth(Year, i);
-               }
     }
      //------------------------------------------------------------
         static void printMonth(int year, int month) {
@@ -80,7 +80,7 @@ public class Callendar {
             document.add(DaysOfTheWeek);
             }
             
-         catch (DocumentException | FileNotFoundException e){
+         catch (DocumentException e){
              
          }
                        
